@@ -1,5 +1,6 @@
 use base64::decode;
 use image::load_from_memory;
+use image::ImageOutputFormat::Png;
 use wasm_bindgen::prelude::wasm_bindgen;
 use web_sys::console::log_1 as log;
 
@@ -12,4 +13,9 @@ pub fn grayscale(encoded_file: &str) {
     log(&"Image loaded".into());
     image = image.grayscale();
     log(&"Grayscale applied".into());
+
+    let mut buffer = vec![];
+    image.write_to(&mut buffer, Png).unwrap();
+
+    log(&"Image written to buffer".into());
 }
